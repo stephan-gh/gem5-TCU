@@ -564,6 +564,11 @@ def createRoTTile(noc, options, id, cmdline, flashTile, rotLayers,
     tile.env_start = tile.brom.range.start + 0x1000
 
     if options.isa == 'riscv':
+        # FIXME: Supervisor/user mode is currently needed for TileMux to start
+        # the RoT service on the RoT tile. The RoT layers work with only M-mode.
+        # tile.cpu.isa[0].privilege_mode_set = 'M'
+        tile.cpu.isa[0].enable_rvv = False
+
         # Mark all regions outside of memory as uncacheable and strictly ordered.
         # This prevents the CPU from making speculative accesses to these regions.
         mem_ranges = [tile.brom.range, tile.spm.range]
