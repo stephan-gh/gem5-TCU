@@ -108,14 +108,22 @@ class M3Loader
         {
             uint64_t magic;
             RotBinary next_layer;
+            uint8_t cache_pub_key[32];
+            uint8_t cache_mac[64];
+            uint8_t next_cache_pub_key[32];
+            uint8_t next_cache_signature[64];
+            uint8_t next_cache_mac[64];
         } blau;
         struct M5_ATTR_PACKED
         {
             uint64_t magic;
+            uint8_t next_cache_pub_key[32];
+            uint8_t next_cache_signature[64];
+            uint8_t next_cache_mac[64];
             uint64_t kernel_mem_size;
             uint8_t kernel_ep_pages;
-            char kernel_cmdline[47];
-            BootModule mods[50];
+            char kernel_cmdline[31];
+            BootModule mods[45];
         } rosa;
     };
 
