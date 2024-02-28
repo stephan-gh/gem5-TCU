@@ -144,12 +144,6 @@ def getOptions():
     parser.add_argument("--pausetile", default="",
                         help="the tile to pause until GDB connects")
 
-    parser.add_argument("--bare-metal", action="store_true",
-                        help="Provide the raw system without the linux specific bits")
-    parser.add_argument("--dtb-filename", action="store", type=str,
-                        help="Specifies device tree blob file to use with device-tree-"\
-                            "enabled kernels")
-
     Options.addCommonOptions(parser)
     Options.addFSOptions(parser)
 

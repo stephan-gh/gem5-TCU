@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017, 2019 ARM Limited
+ * Copyright (c) 2017, 2019, 2023 Arm Limited
  * All rights reserved
  *
  * The license below extends only to copyright in the software and shall
@@ -82,11 +82,11 @@ ExeTracerRecord::traceInst(const StaticInstPtr &inst, bool ran)
     if (debug::ExecSymbol && (!FullSystem || !in_user_mode) &&
             (it = thread->getSymTab().findNearest(cur_pc)) !=
                 thread->getSymTab().end()) {
-        Addr delta = cur_pc - it->address;
+        Addr delta = cur_pc - it->address();
         if (delta)
-            ccprintf(outs, " @%s+%d", it->name, delta);
+            ccprintf(outs, " @%s+%d", it->name(), delta);
         else
-            ccprintf(outs, " @%s", it->name);
+            ccprintf(outs, " @%s", it->name());
     }
 
     if (inst->isMicroop()) {
@@ -102,7 +102,7 @@ ExeTracerRecord::traceInst(const StaticInstPtr &inst, bool ran)
     //
 
     outs << std::setw(26) << std::left;
-    outs << inst->disassemble(cur_pc, &thread->getSymTab());
+    outs << tracer.disassemble(inst, *pc, &thread->getSymTab());
 
     if (ran) {
         outs << " : ";
